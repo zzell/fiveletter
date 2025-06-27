@@ -61,12 +61,12 @@ function App() {
   const loadWords = async () => {
     try {
       // Load comprehensive word list for validation
-      const wordsRes = await fetch('/words.json');
+      const wordsRes = await fetch(`${import.meta.env.BASE_URL}words.json`);
       const wordsData = await wordsRes.json();
       setWords(wordsData.map(w => w.toUpperCase()));
 
       // Load common words for answers
-      const commonRes = await fetch('/5_letter_common.json');
+      const commonRes = await fetch(`${import.meta.env.BASE_URL}5_letter_common.json`);
       const commonData = await commonRes.json();
       setCommonWords(commonData.map(w => w.toUpperCase()));
 
