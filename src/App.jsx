@@ -269,6 +269,15 @@ function App() {
                   }
                 </p>
               </div>
+              <a
+                className="menu-button"
+                href="https://github.com/zzell/fiveletter"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ marginTop: '2rem' }}
+              >
+                <span role="img" aria-label="GitHub">🐙</span> GitHub
+              </a>
             </div>
           </div>
         </div>
