@@ -85,6 +85,10 @@ function App() {
       // Pick random answer from filtered words
       const randomAnswer = availableWords[Math.floor(Math.random() * availableWords.length)];
       setAnswer(randomAnswer.toUpperCase());
+      // Only log for new games, not difficulty changes
+      if (newDifficulty === difficulty) {
+        console.log('New game started! Answer:', randomAnswer.toUpperCase());
+      }
 
       setBoard(getEmptyBoard());
       setBoardColors(getEmptyColors());
@@ -101,7 +105,7 @@ function App() {
 
   useEffect(() => {
     loadWords();
-  }, []);
+  }, []); // Empty dependency array ensures this only runs once on mount
 
   // Keyboard letters
   const KEYS = [

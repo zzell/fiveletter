@@ -207,6 +207,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #333;
 }
 
 .temp-message {
@@ -411,6 +412,7 @@ body {
   .status-message {
     min-height: 1.2rem;
     margin: 0.3rem 0;
+    color: #333;
   }
 
   .board {
