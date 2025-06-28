@@ -446,6 +446,9 @@ body {
   flex-direction: column;
   gap: 0.2rem;
   z-index: 10;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
 }
 
 /* Only apply hover effects on devices that support hover */
