@@ -319,7 +319,7 @@ function App() {
               <button
                 className={`key ${getKeyColor(key)}`}
                 key={key}
-                onClick={() => handleKey(key)}
+                onPointerDown={() => handleKey(key)}
                 disabled={status !== 'playing'}
                 data-key={keyToAction(key)}
               >
