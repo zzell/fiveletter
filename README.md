@@ -27,6 +27,7 @@ This game was **vibe-coded** using:
 - **React + Vite** - for lightning-fast performance
 - **GitHub Pages** - for free hosting
 - **ChatGPT** - for the icon
+- **SUBTLEX** - for the words
 
 ## 🎪 Why This Game?
 In a world full of subscription services and ad-heavy games, we wanted to create something simple and pure - just you, words, and the joy of solving puzzles. No tracking, no monetization, no nonsense.
