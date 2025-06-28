@@ -56,9 +56,11 @@ function App() {
   const [status, setStatus] = useState('playing'); // playing | win | lose
   const [keyColors, setKeyColors] = useState({}); // {A: 'correct', ...}
   const [message, setMessage] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [difficulty, setDifficulty] = useState('easy'); // 'easy' | 'hard'
 
   // Load words and pick a random answer
-  const loadWords = async () => {
+  const loadWords = async (newDifficulty = difficulty) => {
     try {
       // Load comprehensive word list for validation
       const wordsRes = await fetch(`${import.meta.env.BASE_URL}words.json`);
@@ -70,11 +72,18 @@ function App() {
       const commonData = await commonRes.json();
       setCommonWords(commonData.map(w => w.toUpperCase()));
 
-      // Filter common words without duplicate letters for answers
-      const wordsWithoutDuplicates = commonData.filter(word => !hasDuplicateLetters(word));
+      // Filter words based on difficulty
+      let availableWords;
+      if (newDifficulty === 'easy') {
+        // Filter common words without duplicate letters for answers
+        availableWords = commonData.filter(word => !hasDuplicateLetters(word));
+      } else {
+        // Use all common words for hard mode
+        availableWords = commonData;
+      }
 
-      // Pick random answer from common words without duplicates
-      const randomAnswer = wordsWithoutDuplicates[Math.floor(Math.random() * wordsWithoutDuplicates.length)];
+      // Pick random answer from filtered words
+      const randomAnswer = availableWords[Math.floor(Math.random() * availableWords.length)];
       setAnswer(randomAnswer.toUpperCase());
 
       setBoard(getEmptyBoard());
@@ -120,6 +129,22 @@ function App() {
       return newBoard;
     });
     setCurrentCol(0);
+  };
+
+  const handleNewGame = () => {
+    loadWords();
+    setIsMenuOpen(false);
+  };
+
+  const handleResign = () => {
+    setStatus('lose');
+    setIsMenuOpen(false);
+  };
+
+  const handleDifficultyChange = (newDifficulty) => {
+    setDifficulty(newDifficulty);
+    loadWords(newDifficulty);
+    setIsMenuOpen(false);
   };
 
   // Handle key press
@@ -203,10 +228,63 @@ function App() {
 
   return (
     <div className="fiveletter-container">
+      {/* Burger Menu Overlay */}
+      {isMenuOpen && (
+        <div className="menu-overlay" onClick={() => setIsMenuOpen(false)}>
+          <div className="menu-content" onClick={(e) => e.stopPropagation()}>
+            <div className="menu-header">
+              <h2>Menu</h2>
+              <button className="close-menu" onClick={() => setIsMenuOpen(false)}>×</button>
+            </div>
+
+            <div className="menu-items">
+              <button className="menu-button" onClick={handleNewGame}>
+                🎮 New Game
+              </button>
+
+              <button className="menu-button resign-button" onClick={handleResign}>
+                🏳️ Resign
+              </button>
+
+              <div className="difficulty-section">
+                <h3>Level</h3>
+                <div className="difficulty-options">
+                  <button
+                    className={`difficulty-button ${difficulty === 'easy' ? 'active' : ''}`}
+                    onClick={() => handleDifficultyChange('easy')}
+                  >
+                    Easy
+                  </button>
+                  <button
+                    className={`difficulty-button ${difficulty === 'hard' ? 'active' : ''}`}
+                    onClick={() => handleDifficultyChange('hard')}
+                  >
+                    Hard
+                  </button>
+                </div>
+                <p className="difficulty-description">
+                  {difficulty === 'easy'
+                    ? 'Easy mode uses words without repeated letters'
+                    : 'Hard mode includes all words, including those with repeated letters'
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="game-top">
         <header className="fiveletter-header">
-          <button className="refresh-btn" onClick={loadWords} aria-label="Refresh">⟳</button>
+          <button className="burger-menu" onClick={() => setIsMenuOpen(true)} aria-label="Menu">
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+            <div className="burger-line"></div>
+          </button>
           <h1>5 Letter</h1>
+          <button className="restart-btn" onClick={handleNewGame} aria-label="Restart">
+            ↻
+          </button>
         </header>
         <div className="board">
           {board.map((row, rIdx) => (
@@ -234,6 +312,7 @@ function App() {
                 key={key}
                 onClick={() => handleKey(key)}
                 disabled={status !== 'playing'}
+                data-key={keyToAction(key)}
               >
                 {key}
               </button>

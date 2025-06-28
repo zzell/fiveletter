@@ -281,9 +281,24 @@ body {
 }
 
 .key:has(> .icon) {
-  font-size: clamp(0.9rem, 3.2vw, 1.3rem);
-  font-weight: 500;
-  text-transform: none;
+  font-size: clamp(1rem, 4.2vw, 1.5rem);
+}
+
+/* Special styling for Enter key */
+.key:contains("⏎"),
+.key[data-key="ENTER"] {
+  background: #6aaa64;
+  color: #fff;
+  font-weight: 700;
+  min-width: clamp(4rem, 15vw, 5rem);
+  height: clamp(3.2rem, 12vw, 4.2rem);
+  font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+  flex: 2;
+}
+
+.key:contains("⏎"):hover,
+.key[data-key="ENTER"]:hover {
+  background: #5a9a54;
 }
 
 .key.correct {
@@ -388,5 +403,307 @@ body {
 
   .keyboard-row {
     gap: 0.05rem;
+  }
+}
+
+/* Burger Menu Styles */
+.burger-menu {
+  position: absolute;
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  z-index: 10;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) {
+  .burger-menu:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Add active state for touch feedback */
+.burger-menu:active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.burger-line {
+  width: 1.2rem;
+  height: 0.15rem;
+  background-color: #222;
+  border-radius: 0.1rem;
+  transition: all 0.3s ease;
+}
+
+/* Restart Button Styles */
+.restart-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  cursor: pointer;
+  color: #222;
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) {
+  .restart-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
+
+/* Add active state for touch feedback */
+.restart-btn:active {
+  background-color: rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Menu Overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.menu-content {
+  background: #f5f5f5;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.8) translateY(-20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.menu-header h2 {
+  margin: 0;
+  color: #222;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.close-menu {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.close-menu:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #222;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.menu-button {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 0.8rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #222;
+}
+
+.menu-button:hover {
+  background: #e8e8e8;
+  border-color: #bbb;
+  transform: translateY(-1px);
+}
+
+.resign-button {
+  background: #fff5f5;
+  border-color: #ffdddd;
+  color: #c53030;
+}
+
+.resign-button:hover {
+  background: #fed7d7;
+  border-color: #feb2b2;
+}
+
+.difficulty-section {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+}
+
+.difficulty-section h3 {
+  margin: 0 0 1rem 0;
+  color: #222;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.difficulty-options {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.difficulty-button {
+  flex: 1;
+  background: #f8f8f8;
+  border: 2px solid #ddd;
+  border-radius: 0.6rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #666;
+}
+
+.difficulty-button:hover {
+  background: #e8e8e8;
+  border-color: #bbb;
+}
+
+.difficulty-button.active {
+  background: #6aaa64;
+  border-color: #6aaa64;
+  color: #fff;
+}
+
+.difficulty-button.active:hover {
+  background: #5a9a54;
+  border-color: #5a9a54;
+}
+
+.difficulty-description {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* Mobile Menu Adjustments */
+@media (max-width: 480px) {
+  .menu-content {
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    max-width: 95vw;
+  }
+
+  .menu-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .menu-button {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+
+  .difficulty-section {
+    padding: 1rem;
+  }
+
+  .difficulty-button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .burger-menu {
+    left: 0.3rem;
+    padding: 0.3rem;
+  }
+
+  .burger-line {
+    width: 1rem;
+    height: 0.12rem;
+  }
+
+  .restart-btn {
+    right: 0.3rem;
+    padding: 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
   }
 }
