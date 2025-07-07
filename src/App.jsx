@@ -57,7 +57,7 @@ function App() {
   const [keyColors, setKeyColors] = useState({}); // {A: 'correct', ...}
   const [message, setMessage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [difficulty, setDifficulty] = useState('easy'); // 'easy' | 'hard'
+  const [difficulty, setDifficulty] = useState('normal'); // 'easy' | 'normal'
 
   // Load words and pick a random answer
   const loadWords = async (newDifficulty = difficulty) => {
@@ -78,7 +78,7 @@ function App() {
         // Filter common words without duplicate letters for answers
         availableWords = commonData.filter(word => !hasDuplicateLetters(word));
       } else {
-        // Use all common words for hard mode
+        // Use all common words for normal mode
         availableWords = commonData;
       }
 
@@ -254,22 +254,22 @@ function App() {
                 <h3>Level</h3>
                 <div className="difficulty-options">
                   <button
+                    className={`difficulty-button ${difficulty === 'normal' ? 'active' : ''}`}
+                    onClick={() => handleDifficultyChange('normal')}
+                  >
+                    Normal
+                  </button>
+                  <button
                     className={`difficulty-button ${difficulty === 'easy' ? 'active' : ''}`}
                     onClick={() => handleDifficultyChange('easy')}
                   >
                     Easy
                   </button>
-                  <button
-                    className={`difficulty-button ${difficulty === 'hard' ? 'active' : ''}`}
-                    onClick={() => handleDifficultyChange('hard')}
-                  >
-                    Hard
-                  </button>
                 </div>
                 <p className="difficulty-description">
                   {difficulty === 'easy'
-                    ? 'Easy mode uses words without repeated letters'
-                    : 'Hard mode includes all words, including those with repeated letters'
+                    ? 'Easy mode includes only words without repeated letters'
+                    : 'Normal mode includes more words, including those with repeated letters'
                   }
                 </p>
               </div>
@@ -312,8 +312,8 @@ function App() {
 
       <div className="status-message">
         {message && <span className="temp-message">{message}</span>}
-        {status === 'win' && <span>🎉 You Win!</span>}
-        {status === 'lose' && <span>😢 Answer: {answer}</span>}
+        {status === 'win' && <span className="win-message">🎉 You Win!</span>}
+        {status === 'lose' && <span className="lose-message">😢 Answer: {answer}</span>}
       </div>
 
       <div className="keyboard">
